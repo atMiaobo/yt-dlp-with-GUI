@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Basic Video mp4 download",
+    "settings": {
+      "urls": "",
+      "options": {
+        "preset-alias": {
+          "select": "custom",
+          "custom": "mp4"
+        }
+      }
+    }
+  },
+  {
+    "name": "Plain",
+    "settings": {
+      "urls": "",
+      "options": {
+        "preset-alias": {
+          "select": "unset",
+          "custom": "mp4"
+        }
+      }
+    }
+  },
+  {
+    "name": "Basic mp3 download preset",
+    "settings": {
+      "urls": "",
+      "options": {
+        "preset-alias": {
+          "select": "custom",
+          "custom": "mp3"
+        }
+      }
+    }
+  }
+]
