@@ -1,3 +1,27 @@
+# yt-dlp most aligned web frontend with setting autosync
+
+
+
+<img width="1018" height="665" alt="image" src="https://github.com/user-attachments/assets/6b374e85-d820-496d-b623-b91dce43b3e4" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- MANPAGE: BEGIN EXCLUDED SECTION -->
 <div align="center">
 
