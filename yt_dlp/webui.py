@@ -154,13 +154,27 @@ def _build_command(payload):
 
     option_args, errors = _build_option_arguments(payload.get('options', {}))
     urls = _parse_urls(payload.get('urls', ''))
+    download_path = payload.get('download_path', '')
 
+    if not isinstance(download_path, str):
+        errors.append('Download location must be a string')
+        download_path = ''
+    else:
+        download_path = download_path.strip()
+
+    if download_path and any(arg in {'-P', '--paths'} for arg in option_args):
+        errors.append('Download location conflicts with --paths option')
     if not urls:
         errors.append('Provide at least one URL')
     if errors:
         raise ValueError('; '.join(errors))
 
-    return [sys.executable, '-m', 'yt_dlp', *option_args, *urls]
+    command = [sys.executable, '-m', 'yt_dlp']
+    if download_path:
+        command.extend(('-P', download_path))
+    command.extend(option_args)
+    command.extend(urls)
+    return command
 
 
 def _load_favorites():
@@ -594,6 +608,10 @@ _INDEX_HTML = '''<!doctype html>
     <section class="panel">
       <div class="grid">
         <div class="field">
+          <label for="download-path">Download location (optional)</label>
+          <input id="download-path" type="text" placeholder="C:/Downloads or ./DOWNLOADS">
+        </div>
+        <div class="field">
           <label for="urls">URLs (one per line)</label>
           <textarea id="urls" placeholder="https://example.com/video"></textarea>
         </div>
@@ -693,6 +711,7 @@ _INDEX_HTML = '''<!doctype html>
         }
       }
       return {
+        download_path: byId('download-path').value,
         urls: byId('urls').value,
         options,
       };
@@ -838,6 +857,7 @@ _INDEX_HTML = '''<!doctype html>
     }
 
     function applySettings(settings) {
+      byId('download-path').value = typeof settings.download_path === 'string' ? settings.download_path : '';
       byId('urls').value = typeof settings.urls === 'string' ? settings.urls : '';
 
       for (const option of state.options) {
